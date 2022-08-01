@@ -104,7 +104,7 @@ export async function sync_all_onchain(app_id: string) {
           source: 'bitbus'
         }
 
-        console.log(message)
+        //console.log(message)
 
         onchainQueue.push(message)
 
@@ -160,7 +160,7 @@ export async function sync_onchain_app(app_id: string) {
 
       outputs.map(output => {
 
-        console.log('_json1', output)
+        //console.log('_json1', output)
 
         var value = output['s5']
 
@@ -182,7 +182,7 @@ export async function sync_onchain_app(app_id: string) {
           source: 'bitbus'
         }
 
-        console.log(message)
+        //console.log(message)
 
         onchainQueue.push(message)
 
@@ -277,7 +277,6 @@ async function handleQuestion(data: OnchainTransaction) {
   let [question] = await knex('questions').where({ tx_id }).select('*')
 
   if (!question) {
-
     const insert = {
       tx_id,
       tx_index,
@@ -374,8 +373,8 @@ export async function handleOnchainTransaction(data: OnchainTransaction) {
       if (signature) { insert['signature'] = signature }
 
       const result = await knex('onchain_events').insert(insert)
-
       log.info('onchain.event.recorded', insert)
+
 
     }
 

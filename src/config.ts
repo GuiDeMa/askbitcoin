@@ -60,7 +60,7 @@ nconf.defaults({
   boostpow_onchain_app_id: "18pPQigu7j69ioDcUG9dACE1iAN9nCfowr", // boostpow
   leveldb_path: `${process.cwd()}/.rabbi/onchain_db`,
 
-  host: '0.0.0.0',
+  host: '127.0.0.1',
   port: '5200',
   prometheus_enabled: true,
   http_api_enabled: true,
@@ -74,7 +74,7 @@ nconf.defaults({
   sync_ask_bitcoin: true,
   ask_bitcoin_user_private_key: null,
   planaria_token: 'eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxRlRyUWRaRjczd21tSFpVbzRhQzI1a0JWNUprWFRoeGl3IiwiaXNzdWVyIjoiZ2VuZXJpYy1iaXRhdXRoIn0.SHovaVkvTncvNmI0M1Q4WFZ0Ulk2SHdEMXQzOGM1RHJkVTFoTEYyLzhJeEhGZzJsSDQxeldzRG1vdUttemJPb2pJTXd4aVM5Qk9VNjFQNUhJK2x6bUxNPQ',
-  api_base: 'https://askbitcoin.ai'
+  api_base: ''
 })
 
 nconf.required([

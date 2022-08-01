@@ -354,7 +354,6 @@ export async function start() {
   started = true
 
   if (config.get('swagger_enabled')) {
-
     const swaggerOptions = {
       info: {
         title: 'Ask Bitcoin API',
@@ -362,7 +361,7 @@ export async function start() {
         description: 'Ask Bitcoin a Question - Bitcoin AI Ranks the Top Answers'
       },
       schemes: ['https'],
-      host: 'https://askbitcoin.ai',
+      host: 'http://localhost:3000',
       documentationPath: '/api',
       grouping: 'tags'
     }

@@ -25,6 +25,7 @@ export async function start() {
 
   await knex.migrate.latest();
 
+
   if (config.get('webui_enabled')) {
 
     const nextjs = spawn("npm", ["run", "start"], {
@@ -73,13 +74,13 @@ export async function start() {
 
         let tx = await getTransaction(tx_id)
 
-        console.log(tx.toString())
+        //console.log(tx.toString())
 
         let proof = BoostPowJobProof.fromTransaction(tx)
 
         if (proof) {
 
-          console.log(proof)
+          //console.log(proof)
 
           let json = Object.assign(proof.toObject(), {
             tx_id: proof.txid,
@@ -100,7 +101,7 @@ export async function start() {
             timestamp: new Date()
           })
 
-          console.log(json)
+          //console.log(json)
 
           const [record] = await knex('boostpow_proofs').where({
             tx_id: json.tx_id,
@@ -108,7 +109,7 @@ export async function start() {
           })
           .select('*')
 
-          console.log('record', record)
+          //console.log('record', record)
 
           if (!record) {
 
@@ -116,7 +117,7 @@ export async function start() {
 
               let woc_tx = await whatsonchain.getTransaction(json.tx_id)
 
-              console.log({ woc_tx })
+              //console.log({ woc_tx })
 
               if (woc_tx && woc_tx.time) {
 

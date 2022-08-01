@@ -153,6 +153,8 @@ export async function loadQuestions(query: QuestionsQuery={}): Promise<Question[
 
   let allQuestions = await knex('questions')
     .where('id', 'not in', boostedQuestions.map(q => q.id))
+    // .where('boostpow_proofs.timestamp', '>=', start_timestamp)
+    // .where('boostpow_proofs.timestamp', '<=', end_timestamp)
     .orderBy('id', 'desc')
     .limit(100)
     .select('*')
@@ -210,6 +212,8 @@ export async function loadQuestion(query: LoadQuestion): Promise<Question> {
 
   if (question) {
 
+    log.info('question.load.boosted.result')
+
     return question
 
   }
@@ -219,6 +223,8 @@ export async function loadQuestion(query: LoadQuestion): Promise<Question> {
       .select('*')
 
   unBoosted.difficulty = 0
+
+  log.info('question.load.unboosted.result')
 
   return unBoosted
 

@@ -16,7 +16,6 @@ export async function build(req, h) {
 }
 
 export async function index(req, h) {
-
   try {
 
     let questions = await loadQuestions(req.query)
@@ -28,7 +27,6 @@ export async function index(req, h) {
     }
 
   } catch(error) {
-
     return badRequest(error)
 
   }
