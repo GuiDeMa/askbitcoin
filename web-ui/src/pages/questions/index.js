@@ -90,72 +90,51 @@ const QuestionPage = () => {
 
           (async () => {
             try {
-
               let { data: postTransactionResponse } = await axios.post('https://askbitcoin.ai/api/v1/transactions', {
                 transaction: rawTx
               });
-    
+
               console.log('postTransactionResponse', postTransactionResponse);
-    
-            } catch(error) {
-
-              console.error('postTransactionResponse', error)
-
+            } catch (error) {
+              console.error('postTransactionResponse', error);
             }
           })();
 
           (async () => {
-
             try {
-
-              let { data: postTransactionResponse } = await axios.post('http://localhost:5200 /api/v1/questions', {
+              let { data: postTransactionResponse } = await axios.post('http://askbitcoin.ai/api/v1/questions', {
                 transaction: rawTx
               });
-    
-              console.log('api.questsions.post.response', postTransactionResponse);
+
+              console.log('api.questions.post.response', postTransactionResponse);
 
               router.push(`/questions/${txid}`);
-    
-            } catch(error) {
-
-              console.error('api.questsions.post.response', error)
-
+            } catch (error) {
+              console.error('api.questions.post.response', error);
             }
           })();
 
-
           (async () => {
-
             try {
-
               let { data: postTransactionResponse } = await axios.post('https://pow.co/api/v1/transactions', {
                 transaction: rawTx
               });
-    
+
               console.log('powco_post_transaction_response', postTransactionResponse);
-    
-            } catch(error) {
-
-              console.error('powco_post_transaction_response', error)
-
+            } catch (error) {
+              console.error('powco_post_transaction_response', error);
             }
           })();
 
-
           (async () => {
-
             try {
-
               let { data: postTransactionResponse } = await axios.post('https://pow.co/api/v1/jobs', {
                 transaction: rawTx
               });
-    
+
               console.log('powco_post_transaction_response', postTransactionResponse);
-    
-            } catch(error) {
-
-              console.error('powco_post_transaction_response', error)
-
+            } catch (error) {
+              console.error('powco_post_transaction_response', error);
             }
           })();
 
