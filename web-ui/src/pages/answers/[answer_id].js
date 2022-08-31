@@ -67,6 +67,8 @@ const AnswerDetailPage = () => {
           });
           let { amount, currency, identity, paymail, rawTx, satoshis, txid } = result;
           console.log(result);
+          let post = `I just answered an askbitcoin.ai question, find it here:
+          https://askbitcoin.ai/answers${txid}`;
 
           enqueueSnackbar(`Answer Posted by ${paymail}`, {
             anchorOrigin: {
@@ -75,8 +77,8 @@ const AnswerDetailPage = () => {
             },
             variant: 'success',
             action: () => (
-              <Button variant="text" href={`https://whatsonchain.com/tx/${txid}`}>
-                View
+              <Button variant="text" href={`https://twetch.com/compose?text=${post}&draft=0`}>
+                Twetchdat
               </Button>
             )
           });
