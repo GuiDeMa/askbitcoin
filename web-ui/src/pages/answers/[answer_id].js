@@ -76,14 +76,10 @@ const AnswerDetailPage = () => {
               horizontal: 'center'
             },
             variant: 'success',
-            action: () => (
-              <Button variant="text" href={`https://twetch.com/compose?text=${post}&draft=0`}>
-                Twetchdat
-              </Button>
-            )
+            action: () => <Button href={`https://twetch.com/compose?text=${post}&draft=0`}>Twetchdat</Button>
           });
 
-          (async () => {
+          /* (async () => {
             try {
               let { data: postTransactionResponse } = await axios.post('https://askbitcoin.ai/api/v1/transactions', {
                 transaction: rawTx
@@ -131,7 +127,7 @@ const AnswerDetailPage = () => {
             } catch (error) {
               console.error('powco_post_transaction_response', error);
             }
-          })();
+          })(); */
 
           break;
         case 'twetch':

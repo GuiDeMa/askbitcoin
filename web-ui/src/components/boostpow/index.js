@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, IconButton, SvgIcon, Typography } from '@mui/material';
+import { Box, IconButton, SvgIcon, Typography, Button } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
@@ -71,7 +71,7 @@ const BoostButton = ({ txid, content, difficulty, isQuestion }) => {
       https://askbitcoin.ai/${key}/${txid}`;
 
       // Post the new boostpow job transaction to the indexer API at pow.co
-      axios
+      /* axios
         .post(`https://pow.co/api/v1/boost/jobs/${txid}`)
         .then(({ data }) => {
           console.log(`pow.co/api/v1/jobs/${result.txid}.result`, data);
@@ -89,7 +89,7 @@ const BoostButton = ({ txid, content, difficulty, isQuestion }) => {
         })
         .catch((error) => {
           console.error(`post.pow.co/api/v1/jobs`, error);
-        });
+        }); */
 
       enqueueSnackbar(`Boostpow Order Posted`, {
         anchorOrigin: {
@@ -97,11 +97,7 @@ const BoostButton = ({ txid, content, difficulty, isQuestion }) => {
           horizontal: 'center'
         },
         variant: 'success',
-        action: () => (
-          <Button variant="text" href={`https://twetch.com/compose?text=${post}&draft=0`}>
-            Twetchdat
-          </Button>
-        )
+        action: () => <Button href={`https://twetch.com/compose?text=${post}&draft=0`}>Twetchdat</Button>
       });
 
       enqueueSnackbar(`boostpow.job ${result.txid}`, {
