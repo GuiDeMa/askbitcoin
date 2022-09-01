@@ -281,7 +281,7 @@ async function handleQuestion(data: OnchainTransaction) {
   let timestamp, answer_count = null 
 
     let answers = await knex("answers").where({ question_tx_id: tx_id }).select('*')
-    answer_count = answers.length
+    answer_count = answers.length || 0
   try {
 
     let woc_tx = await whatsonchain.getTransaction(tx_id)
@@ -301,17 +301,17 @@ async function handleQuestion(data: OnchainTransaction) {
 
   }
 
-  if (question && question.created_at !== timestamp){
+  /* if (question && question.created_at !== timestamp){
     let record = await knex('questions').where({ tx_id: tx_id}).update({ created_at: timestamp})
     log.info('question.updated', { timestamp, record })
   }
 
 
-  if (question && question.answer_count!== answer_count ){
+  if (question && question.answer_count !== answer_count ){
     let record = await knex('questions').where({ tx_id: tx_id}).update({ answer_count: answer_count})
     log.info('question.updated', { answer_count, record })
     
-  }
+  } */
 
   if (!question) {
 
@@ -319,6 +319,7 @@ async function handleQuestion(data: OnchainTransaction) {
       tx_id,
       tx_index,
       created_at: timestamp,
+      answer_count: answer_count,
       content: value.content,
       author
     }
@@ -338,6 +339,8 @@ async function handleAnswer(data: OnchainTransaction) {
   var { value, tx_id, tx_index, author } = data
 
   let [answer] = await knex('answers').where({ tx_id }).select('*')
+  let answers = await knex("answers").where({ question_tx_id: value.question_tx_id }).select('*')
+  let answer_count = answers.length || 0
   
   let timestamp = null
 
@@ -359,12 +362,11 @@ async function handleAnswer(data: OnchainTransaction) {
 
   }
 
-  if (answer && answer.createdAt === null){
-
+  /* if (answer && answer.createdAt !== timestamp){
     let record = await knex('answers').where({ tx_id: tx_id}).update({ created_at: timestamp})
     log.info('answer.updated', { timestamp, record })
 
-  }
+  } */
 
   if (!answer) {
 
@@ -387,10 +389,57 @@ async function handleAnswer(data: OnchainTransaction) {
     await knex('answers').insert(insert)
 
     log.info('answer.recorded', insert)
+    
+    try {
+      answer_count ++
+      let record = await knex('questions').where({tx_id: question_tx_id}).update({answer_count: answer_count})
+
+      log.info('answer.count.updated.on.question', { record, answer_count })
+      
+    } catch (error) {
+      log.error('answer.count.on.question.update.error', error)
+    }
+
+    
 
   }
 
 
+}
+
+export const handleJob = async (data:OnchainTransaction)=>{
+  
+
+}
+
+export const handleProof = async (data:OnchainTransaction)=>{
+        let {proof_txid} = data.value.tx_id || data.tx_id
+
+        let proof_tx = await getTransaction(proof_txid)
+
+        let proof = boostpow.BoostPowJobProof.fromTransaction(proof_tx)
+
+        log.info('boostpow.proof', proof)
+
+        let json = Object.assign(proof.toObject(), {
+          tx_id: proof.txid,
+          tx_index: proof.vin
+        })
+
+        const [record] = await knex('boostpow_proofs').where({
+          tx_id: proof.txid,
+          tx_index: proof.vin
+        })
+        .select('*')
+
+        if (!record) {
+
+          const result = await knex('boostpow_proofs').insert(json)
+
+          log.info('proof.recorded', result, proof)
+
+        }
+  
 }
 
 export async function handleOnchainTransaction(data: OnchainTransaction) {
@@ -479,33 +528,22 @@ export async function handleOnchainTransaction(data: OnchainTransaction) {
     if (app_id === config.get('boostpow_onchain_app_id')) {
 
       if (key === 'job') {
+        try {
+          return handleJob(data)
+        } catch (error) {
+          log.error('handleJob',error)
+        }
 
       }
 
       if (key === 'proof') {
 
-        let proof_txid = value.tx_id || tx_id
-
-        let proof_tx = await getTransaction(proof_txid)
-
-        let proof = boostpow.BoostPowJobProof.fromTransaction(proof_tx)
-
-        let json = Object.assign(proof.toObject(), {
-          tx_id: proof.txid,
-          tx_index: proof.vin
-        })
-
-        const [record] = await knex('boostpow_proofs').where({
-          tx_id: proof.txid,
-          tx_index: proof.vin
-        })
-        .select('*')
-
-        if (!record) {
-
-          const result = await knex('boostpow_proofs').insert(json)
-
+        try {
+          return handleProof(data)
+        } catch (error) {
+          log.error('handleProof', error)
         }
+        
 
       }
 

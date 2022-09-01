@@ -57,6 +57,9 @@ import { useRouter } from 'next/router';
 
 const avatarImage = '/assets/images/profile/';
 
+//time
+const { DateTime } = require('luxon');
+
 import axios from 'utils/axios';
 
 import { QRCodeSVG } from 'qrcode.react';
@@ -230,7 +233,7 @@ const Post = ({ commentAdd, handleCommentLikes, handleReplayLikes, post, replyAd
                     {/* <FiberManualRecordIcon sx={{ width: '10px', height: '10px', opacity: 0.5, m: '0 5px' }} /> */}
                     {/* {question.time} */}
                     <a target="_blank" rel="noopener" href={`https://whatsonchain.com/tx/${tx_id}`}>
-                      {new Date(created_at).toString('')}
+                      {DateTime.fromSeconds(created_at).toRelative().toString()}
                     </a>
                   </Typography>
                 </Grid>

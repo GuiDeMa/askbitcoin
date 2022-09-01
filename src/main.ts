@@ -100,7 +100,7 @@ export async function start() {
             timestamp: new Date()
           })
 
-          console.log(json)
+          console.log("BOOSTAAAA", json)
 
           const [record] = await knex('boostpow_proofs').where({
             tx_id: json.tx_id,
