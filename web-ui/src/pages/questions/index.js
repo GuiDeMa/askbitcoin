@@ -77,7 +77,7 @@ const QuestionPage = () => {
 
           let post = `I just asked the BitCoin mind a question on askbitcoin.ai, you can find it here: https://askbitcoin.ai/questions/${txid}`;
 
-          enqueueSnackbar(`Question successfully posted}`, {
+          enqueueSnackbar(`Question successfully posted`, {
             anchorOrigin: {
               vertical: 'top',
               horizontal: 'center'
@@ -90,11 +90,11 @@ const QuestionPage = () => {
             )
           });
 
-          let { data: postTransactionResponse } = await axios.post('https://askbitcoin.ai/api/v1/transactions', {
+          /* let { data: postTransactionResponse } = await axios.post('https://askbitcoin.ai/api/v1/transactions', {
             transaction: rawTx
-          });
+          }); 
 
-          console.log('postTransactionResponse', postTransactionResponse);
+          console.log('postTransactionResponse', postTransactionResponse); */
 
           //router.push(`/questions/${txid}`);
           break;

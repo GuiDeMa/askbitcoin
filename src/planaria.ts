@@ -10,6 +10,8 @@ import { getTransaction } from './powco'
 
 import { log } from './log'
 
+import { DateTime } from "luxon"
+
 import config from './config'
 
 //import { leveldb } from './rabbi/onchain'
@@ -278,10 +280,10 @@ async function handleQuestion(data: OnchainTransaction) {
   var { value, tx_id, tx_index, author } = data
 
   let [question] = await knex('questions').where({ tx_id }).select('*')
-  let timestamp, answer_count = null 
+  let timestamp = DateTime.now().toSeconds() 
 
     let answers = await knex("answers").where({ question_tx_id: tx_id }).select('*')
-    answer_count = answers.length || 0
+    let answer_count = answers.length || 0
   try {
 
     let woc_tx = await whatsonchain.getTransaction(tx_id)
@@ -293,7 +295,7 @@ async function handleQuestion(data: OnchainTransaction) {
       timestamp = woc_tx.time
       console.log(timestamp)
 
-    }
+    } 
 
   } catch(error) {
 
@@ -342,7 +344,7 @@ async function handleAnswer(data: OnchainTransaction) {
   let answers = await knex("answers").where({ question_tx_id: value.question_tx_id }).select('*')
   let answer_count = answers.length || 0
   
-  let timestamp = null
+  let timestamp = DateTime.now().toSeconds()
 
   try {
 
