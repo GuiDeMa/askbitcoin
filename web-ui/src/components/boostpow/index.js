@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, IconButton, SvgIcon, Typography } from '@mui/material';
+import { Box, IconButton, SvgIcon, Typography, Button } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
-const BoostButton = ({ txid, content, difficulty }) => {
+const BoostButton = ({ txid, content, difficulty, type }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleBoost = async (event) => {
@@ -51,12 +51,16 @@ const BoostButton = ({ txid, content, difficulty }) => {
 
       console.log('relayx.send.result', result);
 
+      let post = `I just boosted an entry on askbitcoin.ai, you might want to pay attention to this: %0Ahttps://askbitcoin.ai/${type}/${txid}%0A%0ABoostpow miners, you will find the job here:%0Ahttps://whatsonchain.com/tx/${result.txid}
+      `;
+
       enqueueSnackbar(`Boostpow Order Posted`, {
         anchorOrigin: {
           vertical: 'top',
           horizontal: 'center'
         },
-        variant: 'success'
+        variant: 'success',
+        action: () => <Button target="_blank" rel="noreferrer" href={`https://twetch.com/compose?text=${post}`}></Button>
       });
 
       enqueueSnackbar(`boostpow.job ${result.txid}`, {

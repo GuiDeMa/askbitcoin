@@ -121,7 +121,7 @@ FormInput.propTypes = {
 const Post = ({ commentAdd, handleCommentLikes, handleReplayLikes, post, replyAdd, answer }) => {
   const theme = useTheme();
   const router = useRouter();
-  const { tx_id, content, author, difficulty, answer_count, created_at } = post;
+  const { tx_id, content, author, difficulty, question_tx_id, answer_count, created_at } = post;
 
   const [qrDialogOpen, setQrDialogOpen] = React.useState(false);
 
@@ -366,7 +366,7 @@ const Post = ({ commentAdd, handleCommentLikes, handleReplayLikes, post, replyAd
             ></Button>
           </Grid> */}
           <Grid xs={6} md={4} justifyContent="center" item sx={{ h: '100%', w: '100%', display: 'flex', justifyContent: 'center' }}>
-            <BoostButton txid={tx_id} content={content} difficulty={difficulty} />
+            <BoostButton type={question_tx_id ? 'answers' : 'questions'} txid={tx_id} content={content} difficulty={difficulty} />
           </Grid>
           {/* <Button
                   variant="text"

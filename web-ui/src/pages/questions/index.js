@@ -75,6 +75,8 @@ const QuestionPage = () => {
           let { amount, currency, identity, paymail, rawTx, satoshis, txid } = result;
           console.log(result);
 
+          let post = `I just asked the BitCoin mind a question on askbitcoin.ai, you can find it here: https://askbitcoin.ai/questions/${txid}`;
+
           enqueueSnackbar(`Question successfully posted}`, {
             anchorOrigin: {
               vertical: 'top',
@@ -82,8 +84,8 @@ const QuestionPage = () => {
             },
             variant: 'success',
             action: () => (
-              <Button variant="text" href={`https://whatsonchain.com/tx/${txid}`}>
-                View
+              <Button target="_blank" rel="noreferrer" href={`https://twetch.com/compose?text=${post}&draft=0`}>
+                Twetchdat
               </Button>
             )
           });
