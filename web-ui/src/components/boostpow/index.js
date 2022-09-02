@@ -135,9 +135,9 @@ const BoostButton = ({ txid, content, difficulty, type }) => {
           ></path>
         </SvgIcon>
       </IconButton>
-      <Typography variant="p" sx={{ fontSize: '16px', ml: '4px' }}>
+      {/* <Typography variant="p" sx={{ fontSize: '16px', ml: '4px' }}>
         {difficulty} D
-      </Typography>
+      </Typography> */}
     </Box>
   );
 };

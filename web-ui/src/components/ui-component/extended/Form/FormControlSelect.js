@@ -82,6 +82,7 @@ const FormControlSelect = ({ captionLabel, handleFilter, formState, iconPrimary,
         label={captionLabel}
         value={filter}
         onChange={handleChange}
+        disabled
         /* InputProps={{
           startAdornment: (
             <>
