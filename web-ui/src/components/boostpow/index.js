@@ -3,13 +3,6 @@ import { Box, IconButton, SvgIcon, Typography, Button } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
-<<<<<<< HEAD
-const BoostButton = ({ txid, content, difficulty, type }) => {
-  const { enqueueSnackbar } = useSnackbar();
-=======
-import { Script } from 'bsv';
->>>>>>> 2779210c661ab9afa3411ae2d65e2306ceb9a771
-
 const BoostButton = ({ txid, content, difficulty, isQuestion }) => {
   const { enqueueSnackbar } = useSnackbar();
   const handleBoost = async (event) => {
@@ -65,41 +58,8 @@ const BoostButton = ({ txid, content, difficulty, isQuestion }) => {
 
       console.log('relayx.send.result', result);
 
-<<<<<<< HEAD
       let post = `I just boosted an entry on askbitcoin.ai, you might want to pay attention to this: %0Ahttps://askbitcoin.ai/${type}/${txid}%0A%0ABoostpow miners, you will find the job here:%0Ahttps://whatsonchain.com/tx/${result.txid}
       `;
-=======
-      console.log('RESULT', result);
-
-      const { txid } = result;
-
-      console.log('TXID', txid);
-
-      let key = isQuestion ? 'questions' : 'answers';
-      let post = `I just boosted an askbitcoin.ai entry, :
-      https://askbitcoin.ai/${key}/${txid}`;
-
-      // Post the new boostpow job transaction to the indexer API at pow.co
-      /* axios
-        .post(`https://pow.co/api/v1/boost/jobs/${txid}`)
-        .then(({ data }) => {
-          console.log(`pow.co/api/v1/jobs/${result.txid}.result`, data);
-        })
-        .catch((error) => {
-          console.error(`pow.co/api/v1/jobs/${result.txid}`, error);
-        });
-
-      axios
-        .post(`https://pow.co/api/v1/boost/jobs`, {
-          transaction: result.rawTx
-        })
-        .then(({ data }) => {
-          console.log(`post.pow.co/api/v1/jobs.result`, data);
-        })
-        .catch((error) => {
-          console.error(`post.pow.co/api/v1/jobs`, error);
-        }); */
->>>>>>> 2779210c661ab9afa3411ae2d65e2306ceb9a771
 
       enqueueSnackbar(`Boostpow Order Posted`, {
         anchorOrigin: {
@@ -107,11 +67,7 @@ const BoostButton = ({ txid, content, difficulty, isQuestion }) => {
           horizontal: 'center'
         },
         variant: 'success',
-<<<<<<< HEAD
         action: () => <Button target="_blank" rel="noreferrer" href={`https://twetch.com/compose?text=${post}`}></Button>
-=======
-        action: () => <Button href={`https://twetch.com/compose?text=${post}&draft=0`}>Twetchdat</Button>
->>>>>>> 2779210c661ab9afa3411ae2d65e2306ceb9a771
       });
 
       enqueueSnackbar(`boostpow.job ${result.txid}`, {
