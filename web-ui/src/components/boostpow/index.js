@@ -3,9 +3,15 @@ import { Box, IconButton, SvgIcon, Typography, Button } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
+<<<<<<< HEAD
 const BoostButton = ({ txid, content, difficulty, type }) => {
   const { enqueueSnackbar } = useSnackbar();
+=======
+import { Script } from 'bsv';
+>>>>>>> 2779210c661ab9afa3411ae2d65e2306ceb9a771
 
+const BoostButton = ({ txid, content, difficulty, isQuestion }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const handleBoost = async (event) => {
     event.preventDefault();
     const value = 0.05;
@@ -18,7 +24,11 @@ const BoostButton = ({ txid, content, difficulty, type }) => {
       }
     });
 
-    let { data } = await axios.get(`https://askbitcoin.ai/api/v1/boostpow/${txid}/new?value=${value}&currency=${currency}`);
+    const url = `https://askbitcoin.ai/api/v1/boostpow/${txid}/new?value=${value}&currency=${currency}`;
+
+    console.log('boostpow.job.build', { url });
+
+    let { data } = await axios.get(url);
 
     console.log('boostpow.payment_request', data);
 
@@ -30,6 +40,10 @@ const BoostButton = ({ txid, content, difficulty, type }) => {
       variant: 'info'
     });
 
+    const script = new Script(data.outputs[0].script);
+
+    const amount = data.outputs[0].amount / 100000000;
+
     try {
       const send = {
         opReturn: [
@@ -40,19 +54,52 @@ const BoostButton = ({ txid, content, difficulty, type }) => {
             index: 0
           })
         ],
-        amount: data.outputs[0].amount / 100000000,
-        to: data.outputs[0].script,
+        amount,
+        to: script.toASM(),
         currency: 'BSV'
       };
 
       console.log('relayx.send.params', send);
 
-      let result = await relayone.send(send);
+      const result = await relayone.send(send);
 
       console.log('relayx.send.result', result);
 
+<<<<<<< HEAD
       let post = `I just boosted an entry on askbitcoin.ai, you might want to pay attention to this: %0Ahttps://askbitcoin.ai/${type}/${txid}%0A%0ABoostpow miners, you will find the job here:%0Ahttps://whatsonchain.com/tx/${result.txid}
       `;
+=======
+      console.log('RESULT', result);
+
+      const { txid } = result;
+
+      console.log('TXID', txid);
+
+      let key = isQuestion ? 'questions' : 'answers';
+      let post = `I just boosted an askbitcoin.ai entry, :
+      https://askbitcoin.ai/${key}/${txid}`;
+
+      // Post the new boostpow job transaction to the indexer API at pow.co
+      /* axios
+        .post(`https://pow.co/api/v1/boost/jobs/${txid}`)
+        .then(({ data }) => {
+          console.log(`pow.co/api/v1/jobs/${result.txid}.result`, data);
+        })
+        .catch((error) => {
+          console.error(`pow.co/api/v1/jobs/${result.txid}`, error);
+        });
+
+      axios
+        .post(`https://pow.co/api/v1/boost/jobs`, {
+          transaction: result.rawTx
+        })
+        .then(({ data }) => {
+          console.log(`post.pow.co/api/v1/jobs.result`, data);
+        })
+        .catch((error) => {
+          console.error(`post.pow.co/api/v1/jobs`, error);
+        }); */
+>>>>>>> 2779210c661ab9afa3411ae2d65e2306ceb9a771
 
       enqueueSnackbar(`Boostpow Order Posted`, {
         anchorOrigin: {
@@ -60,7 +107,11 @@ const BoostButton = ({ txid, content, difficulty, type }) => {
           horizontal: 'center'
         },
         variant: 'success',
+<<<<<<< HEAD
         action: () => <Button target="_blank" rel="noreferrer" href={`https://twetch.com/compose?text=${post}`}></Button>
+=======
+        action: () => <Button href={`https://twetch.com/compose?text=${post}&draft=0`}>Twetchdat</Button>
+>>>>>>> 2779210c661ab9afa3411ae2d65e2306ceb9a771
       });
 
       enqueueSnackbar(`boostpow.job ${result.txid}`, {

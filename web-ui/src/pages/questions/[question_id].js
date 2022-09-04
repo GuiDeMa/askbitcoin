@@ -82,9 +82,55 @@ const QuestionDetailPage = () => {
             transaction: rawTx
           });
 
-          console.log('postTransactionResponse', postTransactionResponse); */
+          /* (async () => {
+            try {
+              let { data: postTransactionResponse } = await axios.post('https://askbitcoin.ai/api/v1/transactions', {
+                transaction: rawTx
+              });
 
-          //router.push(`/answers/${txid}`);
+              console.log('postTransactionResponse', postTransactionResponse);
+            } catch (error) {
+              console.error('postTransactionResponse', error);
+            }
+          })();
+
+          (async () => {
+            try {
+              let { data: postTransactionResponse } = await axios.post('https://askbitcoin.ai/api/v1/answers', {
+                transaction: rawTx
+              });
+
+              console.log('api.answers.post.response', postTransactionResponse);
+
+              router.push(`/answers/${txid}`);
+            } catch (error) {
+              console.error('api.answers.post.response', error);
+            }
+          })();
+
+          (async () => {
+            try {
+              let { data: postTransactionResponse } = await axios.post('https://pow.co/api/v1/transactions', {
+                transaction: rawTx
+              });
+
+              console.log('powco_post_transaction_response', postTransactionResponse);
+            } catch (error) {
+              console.error('powco_post_transaction_response', error);
+            }
+          })();
+
+          (async () => {
+            try {
+              let { data: postTransactionResponse } = await axios.post('https://pow.co/api/v1/jobs', {
+                transaction: rawTx
+              });
+
+              console.log('powco_post_transaction_response', postTransactionResponse);
+            } catch (error) {
+              console.error('powco_post_transaction_response', error);
+            }
+          })(); */
 
           break;
         case 'twetch':
@@ -119,21 +165,18 @@ const QuestionDetailPage = () => {
 
   let { data, error, refresh, loading } = useAPI(`/questions/${query.question_id}`, queryParams);
 
-  console.log({ data, error, refresh, loading });
-
   if (error) {
-    console.log('ERROR', error);
+    console.error('ERROR', error);
     return <p>Error</p>;
   }
 
-  if (loading || data === undefined || !data) {
+  if (!data) {
     return (
       <p>
         <FormattedMessage id="loading" />
       </p>
     );
   }
-  console.log({ data });
 
   const onChangeFilter = (filter) => {
     setQueryParams(filter.query);

@@ -96,7 +96,6 @@ const QuestionPage = () => {
 
           console.log('postTransactionResponse', postTransactionResponse); */
 
-          //router.push(`/questions/${txid}`);
           break;
         case 'twetch':
           //TODO
@@ -138,7 +137,7 @@ const QuestionPage = () => {
     return <p>Error</p>;
   }
 
-  if (loading || data === undefined || !data) {
+  if (loading && !data) {
     return (
       <p>
         <FormattedMessage id="loading" />

@@ -15,3 +15,6 @@ dist/
 .rabbi/
 .runcache/
 web-ui/node_modules/
+package-lock.json
+web-ui/package-lock.json
+web-ui/yarn.lock
